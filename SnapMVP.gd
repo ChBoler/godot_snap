@@ -104,8 +104,11 @@ func updateBallPos(delta):
 			ballSpeed = MIN_BALL_SPEED
 		else:
 			ballSpeed -= ACCEL_RATE
-	elif (ballSpeed < MAX_BALL_SPEED && totalTrailSize > minSpeedThreshold):
-		ballSpeed += ACCEL_RATE
+	elif (ballSpeed < MAX_BALL_SPEED):# && totalTrailSize > minSpeedThreshold):
+		if (ballSpeed + ACCEL_RATE > MAX_BALL_SPEED):
+			ballSpeed = MAX_BALL_SPEED
+		else:
+			ballSpeed += ACCEL_RATE
 	
 	get_node("Debug").set_text("Ball Speed: " + String(ballSpeed))# + " Target Speed: " + String(targetSpeed) + " Trail Size: " + String(totalTrailSize))
 	
