@@ -1,8 +1,8 @@
 extends Node2D
 
 # Constants
-const MIN_BALL_SPEED = 80
-const MAX_BALL_SPEED = 200
+const MIN_BALL_SPEED = 3000
+const MAX_BALL_SPEED = 5000
 const ACCEL_RATE = 50
 var minSpeedThreshold
 var maxSpeedThreshold
@@ -20,6 +20,9 @@ var lastMousePoint = null
 var lastBallPoint = null
 var totalTrailSize = 0
 
+# Misc
+var testBool = true
+
 func _ready():
 	var ballSize = get_node("MouseBall").get_texture().get_size().x
 	minSpeedThreshold = ballSize * 15
@@ -29,6 +32,10 @@ func _ready():
 	set_process(true)
 	
 func _process(delta):
+	if testBool:
+		createPiece(Vector2(200.0, 200.0), "Blank", "Blank", "Blank", "Blank")
+		testBool = false
+	
 	updateBallPos(delta)
 	update()
 	
@@ -143,7 +150,18 @@ func updateBallPos(delta):
 	
 	# Update position
 	get_node("MouseBall").set_pos(ballPos)
+
+func createPiece(var location, var top, var right, var bottom, var left):
+	var panelBase
+	var panelTexture
 	
+	panelBase = Sprite.new()
+	add_child(panelBase)
+	
+	panelTexture = load("res://assets/PanelA(non-trans).png")
+	panelBase.set_texture(panelTexture)
+	panelBase.set_pos(location)
+
 #func _draw():
 #	for pos in redTrail:
 #		print("hi")
